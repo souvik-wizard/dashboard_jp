@@ -2,11 +2,6 @@ import * as React from "react";
 
 import { cn } from "../lib/utils";
 
-// Lightweight replacement for Radix Avatar primitives.
-// The wrappers keep the same public API (Root/Image/Fallback) by
-// matching prop types to standard HTML elements so existing code
-// using the components should be compatible.
-
 type DivProps = React.HTMLAttributes<HTMLDivElement>;
 type ImgProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
@@ -14,7 +9,10 @@ function Avatar({ className, children, ...props }: DivProps) {
   return (
     <div
       data-slot="avatar"
-      className={cn("relative flex size-8 shrink-0 overflow-hidden rounded-full", className)}
+      className={cn(
+        "relative flex size-8 shrink-0 overflow-hidden rounded-full",
+        className
+      )}
       {...props}
     >
       {children}
@@ -37,7 +35,10 @@ function AvatarFallback({ className, children, ...props }: DivProps) {
   return (
     <div
       data-slot="avatar-fallback"
-      className={cn("bg-muted flex size-full items-center justify-center rounded-full", className)}
+      className={cn(
+        "bg-muted flex size-full items-center justify-center rounded-full",
+        className
+      )}
       {...props}
     >
       {children}

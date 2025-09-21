@@ -2,19 +2,16 @@ import * as React from "react";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
 
 import { cn } from "../lib/utils";
-
-// Simplified dropdown implementation to replace Radix primitive.
-// Note: this provides basic toggle/portal/positioning and a simple
-// item API. It does NOT fully replicate Radix's keyboard accessibility
-// and complex positioning behavior. Use for basic menus and test in-app.
-
 const DropdownContext = React.createContext<{
   open: boolean;
   setOpen: (v: boolean) => void;
   triggerRef: React.RefObject<HTMLElement | null>;
 } | null>(null);
 
-function DropdownMenu({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DropdownMenu({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   const [open, setOpen] = React.useState(false);
   const triggerRef = React.useRef<HTMLElement | null>(null);
 
@@ -27,7 +24,10 @@ function DropdownMenu({ children, ...props }: React.HTMLAttributes<HTMLDivElemen
   );
 }
 
-function DropdownMenuPortal({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DropdownMenuPortal({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div data-slot="dropdown-menu-portal" {...props}>
       {children}
@@ -35,7 +35,10 @@ function DropdownMenuPortal({ children, ...props }: React.HTMLAttributes<HTMLDiv
   );
 }
 
-function DropdownMenuTrigger({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function DropdownMenuTrigger({
+  children,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   const ctx = React.useContext(DropdownContext);
   if (!ctx) return null;
 
@@ -47,7 +50,9 @@ function DropdownMenuTrigger({ children, ...props }: React.ButtonHTMLAttributes<
   return (
     <button
       data-slot="dropdown-menu-trigger"
-      ref={(el) => { ctx.triggerRef.current = el; }}
+      ref={(el) => {
+        ctx.triggerRef.current = el;
+      }}
       {...props}
       onClick={onClick}
     >
@@ -56,7 +61,11 @@ function DropdownMenuTrigger({ children, ...props }: React.ButtonHTMLAttributes<
   );
 }
 
-function usePosition(triggerRef: React.RefObject<HTMLElement | null> | undefined, contentRef: React.RefObject<HTMLElement | null>, sideOffset = 4) {
+function usePosition(
+  triggerRef: React.RefObject<HTMLElement | null> | undefined,
+  contentRef: React.RefObject<HTMLElement | null>,
+  sideOffset = 4
+) {
   React.useLayoutEffect(() => {
     const trigger = triggerRef?.current;
     const content = contentRef.current;
@@ -69,7 +78,12 @@ function usePosition(triggerRef: React.RefObject<HTMLElement | null> | undefined
   }, [triggerRef, contentRef, sideOffset]);
 }
 
-function DropdownMenuContent({ className, sideOffset = 4, children, ...props }: React.HTMLAttributes<HTMLDivElement> & { sideOffset?: number }) {
+function DropdownMenuContent({
+  className,
+  sideOffset = 4,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { sideOffset?: number }) {
   const ctx = React.useContext(DropdownContext);
   const contentRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -78,13 +92,24 @@ function DropdownMenuContent({ className, sideOffset = 4, children, ...props }: 
   if (!ctx || !ctx.open) return null;
 
   return (
-    <div data-slot="dropdown-menu-content" ref={contentRef} className={cn("bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md", className)} {...props}>
+    <div
+      data-slot="dropdown-menu-content"
+      ref={contentRef}
+      className={cn(
+        "bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md",
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   );
 }
 
-function DropdownMenuGroup({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DropdownMenuGroup({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div data-slot="dropdown-menu-group" {...props}>
       {children}
@@ -92,17 +117,51 @@ function DropdownMenuGroup({ children, ...props }: React.HTMLAttributes<HTMLDivE
   );
 }
 
-function DropdownMenuItem({ className, inset, variant = "default", children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { inset?: boolean; variant?: "default" | "destructive" }) {
+function DropdownMenuItem({
+  className,
+  inset,
+  variant = "default",
+  children,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  inset?: boolean;
+  variant?: "default" | "destructive";
+}) {
   return (
-    <button data-slot="dropdown-menu-item" data-inset={inset} data-variant={variant} className={cn("relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none", className)} {...props}>
+    <button
+      data-slot="dropdown-menu-item"
+      data-inset={inset}
+      data-variant={variant}
+      className={cn(
+        "relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none",
+        className
+      )}
+      {...props}
+    >
       {children}
     </button>
   );
 }
 
-function DropdownMenuCheckboxItem({ className, children, checked, ...props }: { className?: string; children?: React.ReactNode; checked?: boolean } & React.HTMLAttributes<HTMLDivElement>) {
+function DropdownMenuCheckboxItem({
+  className,
+  children,
+  checked,
+  ...props
+}: {
+  className?: string;
+  children?: React.ReactNode;
+  checked?: boolean;
+} & React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div data-slot="dropdown-menu-checkbox-item" className={cn("relative flex items-center gap-2 py-1.5 pr-2 pl-8 text-sm", className)} {...props}>
+    <div
+      data-slot="dropdown-menu-checkbox-item"
+      className={cn(
+        "relative flex items-center gap-2 py-1.5 pr-2 pl-8 text-sm",
+        className
+      )}
+      {...props}
+    >
       <span className="pointer-events-none absolute left-2 flex items-center justify-center">
         {checked ? <CheckIcon className="size-4" /> : null}
       </span>
@@ -111,7 +170,10 @@ function DropdownMenuCheckboxItem({ className, children, checked, ...props }: { 
   );
 }
 
-function DropdownMenuRadioGroup({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DropdownMenuRadioGroup({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div data-slot="dropdown-menu-radio-group" {...props}>
       {children}
@@ -119,9 +181,20 @@ function DropdownMenuRadioGroup({ children, ...props }: React.HTMLAttributes<HTM
   );
 }
 
-function DropdownMenuRadioItem({ className, children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function DropdownMenuRadioItem({
+  className,
+  children,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button data-slot="dropdown-menu-radio-item" className={cn("relative flex items-center gap-2 py-1.5 pr-2 pl-8 text-sm", className)} {...props}>
+    <button
+      data-slot="dropdown-menu-radio-item"
+      className={cn(
+        "relative flex items-center gap-2 py-1.5 pr-2 pl-8 text-sm",
+        className
+      )}
+      {...props}
+    >
       <span className="pointer-events-none absolute left-2 flex items-center justify-center">
         <CircleIcon className="size-2 fill-current" />
       </span>
@@ -130,25 +203,57 @@ function DropdownMenuRadioItem({ className, children, ...props }: React.ButtonHT
   );
 }
 
-function DropdownMenuLabel({ className, inset, children, ...props }: React.HTMLAttributes<HTMLDivElement> & { inset?: boolean }) {
+function DropdownMenuLabel({
+  className,
+  inset,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { inset?: boolean }) {
   return (
-    <div data-slot="dropdown-menu-label" data-inset={inset} className={cn("px-2 py-1.5 text-sm font-medium", className)} {...props}>
+    <div
+      data-slot="dropdown-menu-label"
+      data-inset={inset}
+      className={cn("px-2 py-1.5 text-sm font-medium", className)}
+      {...props}
+    >
       {children}
     </div>
   );
 }
 
-function DropdownMenuSeparator({ className, ...props }: React.HTMLAttributes<HTMLHRElement>) {
-  return <div data-slot="dropdown-menu-separator" className={cn("bg-border -mx-1 my-1 h-px", className)} {...props} />;
-}
-
-function DropdownMenuShortcut({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
+function DropdownMenuSeparator({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLHRElement>) {
   return (
-    <span data-slot="dropdown-menu-shortcut" className={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)} {...props} />
+    <div
+      data-slot="dropdown-menu-separator"
+      className={cn("bg-border -mx-1 my-1 h-px", className)}
+      {...props}
+    />
   );
 }
 
-function DropdownMenuSub({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DropdownMenuShortcut({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement>) {
+  return (
+    <span
+      data-slot="dropdown-menu-shortcut"
+      className={cn(
+        "text-muted-foreground ml-auto text-xs tracking-widest",
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+function DropdownMenuSub({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div data-slot="dropdown-menu-sub" {...props}>
       {children}
@@ -156,18 +261,42 @@ function DropdownMenuSub({ children, ...props }: React.HTMLAttributes<HTMLDivEle
   );
 }
 
-function DropdownMenuSubTrigger({ className, inset, children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { inset?: boolean }) {
+function DropdownMenuSubTrigger({
+  className,
+  inset,
+  children,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { inset?: boolean }) {
   return (
-    <button data-slot="dropdown-menu-sub-trigger" data-inset={inset} className={cn("flex items-center rounded-sm px-2 py-1.5 text-sm", className)} {...props}>
+    <button
+      data-slot="dropdown-menu-sub-trigger"
+      data-inset={inset}
+      className={cn(
+        "flex items-center rounded-sm px-2 py-1.5 text-sm",
+        className
+      )}
+      {...props}
+    >
       {children}
       <ChevronRightIcon className="ml-auto size-4" />
     </button>
   );
 }
 
-function DropdownMenuSubContent({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function DropdownMenuSubContent({
+  className,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div data-slot="dropdown-menu-sub-content" className={cn("bg-popover text-popover-foreground min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg", className)} {...props}>
+    <div
+      data-slot="dropdown-menu-sub-content"
+      className={cn(
+        "bg-popover text-popover-foreground min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg",
+        className
+      )}
+      {...props}
+    >
       {children}
     </div>
   );
