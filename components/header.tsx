@@ -44,7 +44,7 @@ export function Header({ onMenuClick, showMenuButton }: HeaderProps) {
           />
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 hidden sm:block">
             <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-              ⌘K
+              ⌘/
             </kbd>
           </div>
         </div>
