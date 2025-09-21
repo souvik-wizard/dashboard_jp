@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const notifications = [
   {
@@ -25,7 +25,7 @@ const notifications = [
     time: "Today, 11:59 AM",
     avatar: "/subscription-concept.png",
   },
-]
+];
 
 const activities = [
   {
@@ -53,7 +53,7 @@ const activities = [
     time: "Feb 2, 2023",
     avatar: "/delete.jpg",
   },
-]
+];
 
 const contacts = [
   { name: "Natali Craig", avatar: "/natali.jpg" },
@@ -62,13 +62,13 @@ const contacts = [
   { name: "Andi Lane", avatar: "/andi.jpg" },
   { name: "Kate Morrison", avatar: "/kate.jpg" },
   { name: "Koray Okumus", avatar: "/koray.jpg" },
-]
+];
 
 export function NotificationsPanel() {
   return (
     <div className="w-80 bg-background border-l border-border flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-border">
+      <div className="p-4  border-border">
         <h2 className="font-semibold text-foreground">Notifications</h2>
       </div>
 
@@ -83,15 +83,19 @@ export function NotificationsPanel() {
                   {notification.type === "bug"
                     ? "🐛"
                     : notification.type === "user"
-                      ? "👤"
-                      : notification.type === "subscription"
-                        ? "📧"
-                        : "🔔"}
+                    ? "👤"
+                    : notification.type === "subscription"
+                    ? "📧"
+                    : "🔔"}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-foreground">{notification.message}</p>
-                <p className="text-xs text-muted-foreground mt-1">{notification.time}</p>
+                <p className="text-sm text-foreground">
+                  {notification.message}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {notification.time}
+                </p>
               </div>
             </div>
           ))}
@@ -109,7 +113,9 @@ export function NotificationsPanel() {
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-foreground">{activity.message}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {activity.time}
+                  </p>
                 </div>
               </div>
             ))}
@@ -138,5 +144,5 @@ export function NotificationsPanel() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -7,12 +7,18 @@ import { NotificationsPanel } from "./notifications-panel";
 export function Dashboard() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(true);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
       if (window.innerWidth >= 1024) {
         setIsMobileMenuOpen(false);
+        // keep collapsed state only for desktop; when switching to desktop we keep it as-is
+      } else {
+        // if we become mobile, reset collapsed so mobile overlay behaves normally
+        setCollapsed(false);
       }
     };
 
@@ -42,21 +48,29 @@ export function Dashboard() {
         lg:translate-x-0 lg:static lg:inset-0
       `}
       >
-        <Sidebar onClose={() => setIsMobileMenuOpen(false)} />
+        <Sidebar
+          onClose={() => setIsMobileMenuOpen(false)}
+          collapsed={collapsed}
+        />
       </div>
 
       <div className="flex-1 flex flex-col min-w-0">
         <Header
           onMenuClick={() => setIsMobileMenuOpen(true)}
           showMenuButton={isMobile}
+          onToggleCollapse={() => setCollapsed((s: boolean) => !s)}
+          onToggleNotifications={() => setShowNotifications((s: boolean) => !s)}
         />
         <div className="flex-1 flex overflow-hidden">
           <MainContent />
-          <div className="hidden xl:block overflow-auto">
-            <NotificationsPanel />
-          </div>
         </div>
       </div>
+
+      {showNotifications && (
+        <div className="hidden xl:block overflow-auto">
+          <NotificationsPanel />
+        </div>
+      )}
     </div>
   );
 }

@@ -96,7 +96,7 @@ function DropdownMenuContent({
       data-slot="dropdown-menu-content"
       ref={contentRef}
       className={cn(
-        "bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md",
+        "bg-popover text-popover-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md absolute -mt-18 -ml-36",
         className
       )}
       {...props}
@@ -133,7 +133,7 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       className={cn(
-        "relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none",
+        "relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none hover:cursor-pointer w-full hover:bg-accent hover:text-accent-foreground",
         className
       )}
       {...props}

@@ -122,57 +122,26 @@
     @apply bg-background text-foreground;
   }
 
-  /* Smooth theme transitions */
-  .theme-transition *,
-  .theme-transition *::before,
-  .theme-transition *::after {
-    transition: 
-      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      fill 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  }
-
-  /* Ensure CSS custom properties also transition smoothly */
+  /* Optimized theme transitions - only target essential visual properties */
   .theme-transition {
     transition: 
-      --background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --card 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --card-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --popover 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --popover-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --primary 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --primary-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --secondary 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --secondary-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --muted 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --muted-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --accent 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --accent-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --destructive 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --destructive-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --border 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --input 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --ring 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar-primary 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar-primary-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar-accent 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar-accent-foreground 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar-border 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      --sidebar-ring 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
-  /* Prevent transition on initial load */
-  .no-transition *,
-  .no-transition *::before,
-  .no-transition *::after {
+  .theme-transition * {
+    transition: 
+      background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      fill 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* Prevent transitions on initial load */
+  .no-transition,
+  .no-transition * {
     transition: none !important;
   }
 }

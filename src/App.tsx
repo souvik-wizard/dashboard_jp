@@ -6,7 +6,7 @@ import "./index.css";
 
 function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <ThemeProvider defaultTheme="system" enableSystem>
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />

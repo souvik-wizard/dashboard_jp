@@ -37,50 +37,47 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement;
 
-    // On initial load, prevent transitions
-    if (isInitialLoad) {
-      root.classList.add("no-transition");
-      root.classList.remove("light", "dark");
-
-      if (theme === "system" && enableSystem) {
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-          .matches
+    // Determine the actual theme to apply
+    const actualTheme =
+      theme === "system" && enableSystem
+        ? window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
-          : "light";
-        root.classList.add(systemTheme);
-      } else {
-        root.classList.add(theme);
-      }
+          : "light"
+        : theme;
 
-      // Remove no-transition class after initial load
+    // On initial load, apply theme without transitions
+    if (isInitialLoad) {
+      root.className = root.className
+        .replace(/\b(light|dark|theme-transition|no-transition)\b/g, "")
+        .trim();
+      root.classList.add("no-transition", actualTheme);
+
+      // Remove no-transition class after a minimal delay
       const timeoutId = setTimeout(() => {
         root.classList.remove("no-transition");
         setIsInitialLoad(false);
-      }, 100);
+      }, 10);
 
       return () => clearTimeout(timeoutId);
     }
 
-    // For subsequent theme changes, add smooth transitions
-    root.classList.add("theme-transition");
-    root.classList.remove("light", "dark");
+    // For subsequent theme changes, use requestAnimationFrame for smooth DOM updates
+    let timeoutId: number;
 
-    if (theme === "system" && enableSystem) {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(theme);
-    }
+    requestAnimationFrame(() => {
+      // Add transition class and update theme in single batch
+      root.className = root.className
+        .replace(/\b(light|dark|theme-transition)\b/g, "")
+        .trim();
+      root.classList.add("theme-transition", actualTheme);
 
-    // Remove transition class after animation completes
-    const timeoutId = setTimeout(() => {
-      root.classList.remove("theme-transition");
-    }, 300);
+      // Remove transition class after animation completes
+      timeoutId = window.setTimeout(() => {
+        root.classList.remove("theme-transition");
+      }, 200); // Reduced from 300ms to 200ms
+    });
 
-    return () => clearTimeout(timeoutId);
+    return () => window.clearTimeout(timeoutId);
   }, [theme, enableSystem, isInitialLoad]);
 
   // Listen for system theme changes
