@@ -48,7 +48,7 @@ export function MetricsCards() {
                 : ""
             }`}
           >
-            <CardContent className="p-4 md:p-6">
+            <CardContent className="">
               <div className="space-y-2">
                 <p className="text-xs md:text-sm font-medium text-muted-foreground">
                   {metric.title}
