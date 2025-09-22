@@ -65,11 +65,9 @@ export function TotalSales() {
                     className="w-3.5 h-3.5 rounded-full"
                     style={{ backgroundColor: item.color }}
                   />
-                  <span className="text-lg font-medium">{item.name}</span>
+                  <span className="">{item.name}</span>
                 </div>
-                <span className="text-lg font-semibold">
-                  ${item.value.toFixed(2)}
-                </span>
+                <span className="">${item.value.toFixed(2)}</span>
               </div>
             ))}
           </div>

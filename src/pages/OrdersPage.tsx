@@ -398,11 +398,7 @@ export default function OrdersPage() {
                               return copy;
                             });
                           }}
-                          className={`transition-opacity duration-150 ${
-                            order.selected
-                              ? "opacity-100 pointer-events-auto"
-                              : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
-                          }`}
+                          className="w-6 h-6 mr-2"
                         />
                         <div>
                           <div className="font-medium text-foreground">

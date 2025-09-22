@@ -25,12 +25,8 @@ export function RevenueMap() {
             {locations.map((location) => (
               <div key={location.city} className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-medium text-foreground">
-                    {location.city}
-                  </span>
-                  <span className="text-base font-semibold text-foreground">
-                    {location.value}
-                  </span>
+                  <span className="  text-foreground">{location.city}</span>
+                  <span className=" text-foreground">{location.value}</span>
                 </div>
                 <div className="w-full bg-muted/20 rounded-full h-1">
                   <div
