@@ -1,64 +1,109 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 
 const data = [
-  { month: "Jan", current: 15, previous: 12 },
-  { month: "Feb", current: 18, previous: 16 },
-  { month: "Mar", current: 12, previous: 14 },
-  { month: "Apr", current: 20, previous: 18 },
-  { month: "May", current: 16, previous: 15 },
-  { month: "Jun", current: 22, previous: 20 },
-]
+  { month: "Jan", current: 12, previous: 7 },
+  { month: "Feb", current: 8, previous: 16 },
+  { month: "Mar", current: 7, previous: 13 },
+  { month: "Apr", current: 15, previous: 10 },
+  { month: "May", current: 19, previous: 11 },
+  { month: "Jun", current: 20, previous: 23 },
+];
 
 export function RevenueChart() {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">Revenue</CardTitle>
+      <CardHeader className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-6 text-sm">
+          <CardTitle className="text-xl font-bold text-foreground">
+            Revenue
+          </CardTitle>
+
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-1"></div>
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: "var(--foreground)" }}
+            />
             <span className="text-muted-foreground">Current Week</span>
-            <span className="font-semibold">$58,211</span>
+            <span className="font-semibold text-foreground">$58,211</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-chart-2"></div>
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: "#7BA7D1" }}
+            />
             <span className="text-muted-foreground">Previous Week</span>
-            <span className="font-semibold">$68,768</span>
+            <span className="font-semibold text-foreground">$68,768</span>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="h-64">
+        <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <LineChart
+              data={data}
+              margin={{ top: 18, right: 30, left: 20, bottom: 24 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="var(--border)"
+                opacity={0.25}
+              />
               <XAxis
                 dataKey="month"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+                tick={{ fontSize: 14, fill: "var(--muted-foreground)" }}
+                tickMargin={20}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }}
+                tick={{ fontSize: 14, fill: "var(--muted-foreground)" }}
                 tickFormatter={(value) => `${value}M`}
+                domain={[0, 30]}
+                tickMargin={20}
+              />
+              <Tooltip
+                wrapperStyle={{
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
+                  color: "var(--foreground)",
+                  borderRadius: 8,
+                }}
+                contentStyle={{ background: "transparent", border: "none" }}
+                itemStyle={{ color: "var(--foreground)" }}
+                labelStyle={{ color: "var(--muted-foreground)" }}
               />
               <Line
                 type="monotone"
                 dataKey="current"
-                stroke="hsl(var(--chart-1))"
-                strokeWidth={3}
+                stroke="var(--foreground)"
+                strokeWidth={2}
                 dot={false}
-                strokeDasharray="5 5"
+                strokeDasharray="0 0 5 5"
               />
-              <Line type="monotone" dataKey="previous" stroke="hsl(var(--chart-2))" strokeWidth={3} dot={false} />
+              <Line
+                type="monotone"
+                dataKey="previous"
+                stroke="#7BA7D1"
+                strokeWidth={2}
+                dot={false}
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

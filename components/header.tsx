@@ -35,7 +35,7 @@ export function Header({
         <Button
           variant="ghost"
           size="sm"
-          className="p-2 hidden lg:flex"
+          className="p-2 !hidden lg:!flex"
           onClick={() => onToggleCollapse && onToggleCollapse()}
         >
           <PiSidebar className="w-4 h-4" />

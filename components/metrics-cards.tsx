@@ -8,6 +8,11 @@ const metrics = [
     change: "+11.01%",
     trend: "up",
     href: null as string | null,
+    // explicit light mode colors via inline style, dark mode via Tailwind class
+    lightBg: "#E3F5FF",
+    bgClass: "dark:!bg-[#E3F5FF]",
+    lightText: "#1C1C1C",
+    textClass: "dark:!text-[#1C1C1C]",
   },
   {
     title: "Orders",
@@ -15,6 +20,10 @@ const metrics = [
     change: "-0.03%",
     trend: "down",
     href: "/orders",
+    lightBg: "#F7F9FB",
+    bgClass: "dark:!bg-[#FFFFFF0D]",
+    lightText: "#1C1C1C",
+    textClass: "dark:!text-[#FFFFFF]",
   },
   {
     title: "Revenue",
@@ -22,6 +31,10 @@ const metrics = [
     change: "+15.03%",
     trend: "up",
     href: null as string | null,
+    lightBg: "#F7F9FB",
+    bgClass: "dark:!bg-[#FFFFFF0D]",
+    lightText: "#1C1C1C",
+    textClass: "dark:!text-[#FFFFFF]",
   },
   {
     title: "Growth",
@@ -29,38 +42,37 @@ const metrics = [
     change: "+6.08%",
     trend: "up",
     href: null as string | null,
+    lightBg: "#E5ECF6",
+    bgClass: "dark:!bg-[#E5ECF6]",
+    lightText: "#1C1C1C",
+    textClass: "dark:!text-[#1C1C1C]",
   },
 ];
 
 export function MetricsCards() {
   return (
-    <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
-      {metrics.map((metric, index) => {
+    <div className="grid grid-cols-2 gap-3 lg:gap-8">
+      {metrics.map((metric) => {
         const isLink = Boolean(metric.href);
 
         const card = (
           <Card
-            className={`${
-              index === 0 ? "bg-blue-50 dark:bg-blue-950/20" : ""
-            } ${
-              isLink
-                ? "cursor-pointer hover:shadow-md transition-all duration-200"
-                : ""
+            style={{ backgroundColor: metric.lightBg, color: metric.lightText }}
+            className={`${metric.bgClass || ""} ${metric.textClass || ""} ${
+              isLink ? "cursor-pointer transition-all duration-200" : ""
             }`}
           >
-            <CardContent className="">
+            <CardContent className="p-4 md:p-6">
               <div className="space-y-2">
-                <p className="text-xs md:text-sm font-medium text-muted-foreground">
-                  {metric.title}
-                </p>
+                <p className="text-xs md:text-sm font-medium">{metric.title}</p>
                 <div className="flex items-center justify-between">
-                  <p className="text-lg md:text-2xl font-bold text-foreground">
+                  <p className="text-lg md:text-2xl font-bold">
                     {metric.value}
                   </p>
                   <div
                     className={`flex items-center gap-1 text-xs md:text-sm ${
-                      metric.trend === "up" ? "text-green-600" : "text-red-600"
-                    }`}
+                      metric.textClass || ""
+                    } `}
                   >
                     {metric.trend === "up" ? (
                       <TrendingUp className="w-3 h-3 md:w-4 md:h-4" />

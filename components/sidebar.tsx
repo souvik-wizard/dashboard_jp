@@ -6,7 +6,7 @@ import {
   PieChart,
   ShoppingBag,
   ShoppingCart,
-  X
+  X,
 } from "lucide-react";
 import React, { useState } from "react";
 import { GoDotFill } from "react-icons/go";
@@ -47,22 +47,46 @@ const sidebarItems: SidebarSection[] = [
   {
     title: "Dashboards",
     items: [
-        { name: "Default", active: true, href: "/", icon: PieChart, children: [
+      {
+        name: "Default",
+        active: true,
+        href: "/",
+        icon: PieChart,
+        children: [
           { name: "Summary", active: false },
-          { name: "Details", active: false }
-        ] },
-        { name: "eCommerce", active: false, href: "/", icon: ShoppingBag, children: [
+          { name: "Details", active: false },
+        ],
+      },
+      {
+        name: "eCommerce",
+        active: false,
+        href: "/",
+        icon: ShoppingBag,
+        children: [
           { name: "Sales", active: false },
-          { name: "Customers", active: false }
-        ] },
-        { name: "Projects", active: false, href: "/", icon: Folder, children: [
+          { name: "Customers", active: false },
+        ],
+      },
+      {
+        name: "Projects",
+        active: false,
+        href: "/",
+        icon: Folder,
+        children: [
           { name: "Active", active: false },
-          { name: "Archived", active: false }
-        ] },
-        { name: "Online Courses", active: false, href: "/", icon: BookOpen, children: [
+          { name: "Archived", active: false },
+        ],
+      },
+      {
+        name: "Online Courses",
+        active: false,
+        href: "/",
+        icon: BookOpen,
+        children: [
           { name: "Enrolled", active: false },
-          { name: "Completed", active: false }
-        ] },
+          { name: "Completed", active: false },
+        ],
+      },
     ],
   },
   {
@@ -91,22 +115,42 @@ const sidebarItems: SidebarSection[] = [
           { name: "Followers", active: false },
         ],
       },
-        { name: "Account", active: false, icon: PiIdentificationCardDuotone, children: [
+      {
+        name: "Account",
+        active: false,
+        icon: PiIdentificationCardDuotone,
+        children: [
           { name: "Settings", active: false },
-          { name: "Security", active: false }
-        ] },
-        { name: "Corporate", active: false, icon: GrGroup, children: [
+          { name: "Security", active: false },
+        ],
+      },
+      {
+        name: "Corporate",
+        active: false,
+        icon: GrGroup,
+        children: [
           { name: "Teams", active: false },
-          { name: "Partners", active: false }
-        ] },
-        { name: "Blog", active: false, icon: PiNotebookLight, children: [
+          { name: "Partners", active: false },
+        ],
+      },
+      {
+        name: "Blog",
+        active: false,
+        icon: PiNotebookLight,
+        children: [
           { name: "Posts", active: false },
-          { name: "Comments", active: false }
-        ] },
-        { name: "Social", active: false, icon: PiChatsCircle, children: [
+          { name: "Comments", active: false },
+        ],
+      },
+      {
+        name: "Social",
+        active: false,
+        icon: PiChatsCircle,
+        children: [
           { name: "Messages", active: false },
-          { name: "Groups", active: false }
-        ] },
+          { name: "Groups", active: false },
+        ],
+      },
     ],
   },
 ];
@@ -202,21 +246,26 @@ export function Sidebar({ onClose, collapsed }: SidebarProps) {
                           ? "flex items-center justify-center p-2 rounded-lg text-sm cursor-pointer transition-colors"
                           : "flex items-center gap-2 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors",
                         item.active
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium "
                           : collapsed
                           ? "text-sidebar-foreground hover:bg-sidebar-accent/50"
                           : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                       )}
                     >
-                      
                       {/* right-side chevron for expanded rows with children */}
-                        {!collapsed && item.children ? (
-                          <div className="ml-auto pl-2">
+                      {!collapsed && item.children ? (
+                        <div className="ml-auto pl-2 relative flex items-center">
+                          {/* active indicator bar */}
+                          {item.active && (
+                            <span className="absolute rounded-full -left-3 top-1/2 -translate-y-1/2 h-6 w-1 bg-[var(--foreground)] " />
+                          )}
+                          <div className="pl-3">
                             {renderIcon(ChevronRight, {
                               className: "w-4 h-4 text-muted-foreground",
                             })}
                           </div>
-                        ) : null}
+                        </div>
+                      ) : null}
                       {/* left icon area: always show icon in expanded mode */}
                       <div
                         className={cn(
@@ -241,7 +290,6 @@ export function Sidebar({ onClose, collapsed }: SidebarProps) {
                       {!collapsed && (
                         <span className="truncate flex-1">{item.name}</span>
                       )}
-
                     </Link>
                   ) : (
                     <div
@@ -256,17 +304,23 @@ export function Sidebar({ onClose, collapsed }: SidebarProps) {
                       onClick={() => item.children && toggleExpanded(item.name)}
                     >
                       {/* right-side chevron for expanded rows with children */}
-                        {!collapsed && item.children ? (
-                          <div className="ml-auto pl-2">
-                          {expandedItems.includes(item.name)
-                            ? renderIcon(ChevronDown, {
-                                className: "w-4 h-4 text-muted-foreground",
-                              })
-                            : renderIcon(ChevronRight, {
-                              className: "w-4 h-4 text-muted-foreground",
-                            })}
+                      {!collapsed && item.children ? (
+                        <div className="ml-auto pl-2 relative flex items-center">
+                          {/* active indicator bar */}
+                          {item.active && (
+                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-0.5 bg-[var(--foreground)] rounded-sm" />
+                          )}
+                          <div className="pl-3">
+                            {expandedItems.includes(item.name)
+                              ? renderIcon(ChevronDown, {
+                                  className: "w-4 h-4 text-muted-foreground",
+                                })
+                              : renderIcon(ChevronRight, {
+                                  className: "w-4 h-4 text-muted-foreground",
+                                })}
                           </div>
-                        ) : null}
+                        </div>
+                      ) : null}
                       {/* left icon area */}
                       <div
                         className={cn(

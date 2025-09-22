@@ -1,15 +1,17 @@
-import { MetricsCards } from "./metrics-cards"
-import { ProjectionsChart } from "./projections-chart"
-import { RevenueChart } from "./revenue-chart"
-import { RevenueMap } from "./revenue-map"
-import { TopSellingProducts } from "./top-selling-products"
-import { TotalSales } from "./total-sales"
+import { MetricsCards } from "./metrics-cards";
+import { ProjectionsChart } from "./projections-chart";
+import { RevenueChart } from "./revenue-chart";
+import { RevenueMap } from "./revenue-map";
+import { TopSellingProducts } from "./top-selling-products";
+import { TotalSales } from "./total-sales";
 
 export function MainContent() {
   return (
     <div className="flex-1 p-3 md:p-6 overflow-y-auto">
       <div className="mb-4 md:mb-6">
-        <h1 className="text-xl md:text-2xl font-semibold text-foreground">eCommerce</h1>
+        <h1 className="text-xl md:text-2xl font-semibold text-foreground">
+          eCommerce
+        </h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-4 md:mb-6">
@@ -21,15 +23,23 @@ export function MainContent() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
-        <RevenueChart />
-        <RevenueMap />
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[6fr_2fr] gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="w-full">
+          <RevenueChart />
+        </div>
+        <div className="w-full">
+          <RevenueMap />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-        <TopSellingProducts />
-        <TotalSales />
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[6fr_2fr] gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="w-full">
+          <TopSellingProducts />
+        </div>
+        <div className="w-full">
+          <TotalSales />
+        </div>
       </div>
     </div>
-  )
+  );
 }
