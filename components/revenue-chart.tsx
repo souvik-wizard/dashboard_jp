@@ -22,12 +22,14 @@ const data = [
 
 export function RevenueChart() {
   return (
-    <Card>
+    <Card className="h-full relative">
       <CardHeader className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-6 text-sm">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 text-sm">
           <CardTitle className="text-xl font-bold text-foreground">
             Revenue
           </CardTitle>
+
+          <span className=" h-6 w-0.5 bg-[#1C1C1C33] dark:bg-[#FFFFFF33] rounded-sm hidden md:flex" />
 
           <div className="flex items-center gap-2">
             <div

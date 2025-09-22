@@ -67,9 +67,24 @@ export function Dashboard() {
       </div>
 
       {showNotifications && (
-        <div className="hidden xl:block overflow-auto">
-          <NotificationsPanel />
-        </div>
+        <>
+          {/* Desktop: persistent panel */}
+          <div className="hidden xl:block overflow-auto">
+            <NotificationsPanel />
+          </div>
+
+          {/* Mobile: slide-over from right */}
+          <div
+            className={`fixed inset-y-0 right-0 z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
+              showNotifications ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            <NotificationsPanel
+              onClose={() => setShowNotifications(false)}
+              className="w-screen max-w-sm"
+            />
+          </div>
+        </>
       )}
     </div>
   );

@@ -12,7 +12,7 @@ const data = [
 
 export function TotalSales() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">Total Sales</CardTitle>
       </CardHeader>
@@ -48,7 +48,7 @@ export function TotalSales() {
 
             {/* percentage badge shifted slightly lower-left to match design */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className=" bg-gray-800 text-white px-4 py-2 rounded-lg shadow-sm">
+              <div className="transform translate-y-16 -translate-x-20 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-sm">
                 <span className="text-lg font-semibold">38.6%</span>
               </div>
             </div>

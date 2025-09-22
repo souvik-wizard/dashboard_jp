@@ -49,8 +49,8 @@ export function Header({
         </div>
       </div>
 
-      <div className="flex items-center">
-        <div className="flex-1 w-[180px] mx-2 bg-muted/80 rounded-md">
+      <div className="flex items-center ">
+        <div className="flex-1 w-full max-w-[180px] mx-2 bg-muted/80 rounded-md">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
@@ -71,7 +71,10 @@ export function Header({
             <History className="w-4 h-4" />
           </Button>
           <Button variant="ghost" size="sm" className="p-2">
-            <Bell className="w-4 h-4" />
+            <Bell
+              className="w-4 h-4"
+              onClick={() => onToggleNotifications && onToggleNotifications()}
+            />
           </Button>
           <Button
             variant="ghost"

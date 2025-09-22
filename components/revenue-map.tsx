@@ -9,7 +9,7 @@ const locations = [
 
 export function RevenueMap() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-lg font-semibold">
           Revenue by Location

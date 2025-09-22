@@ -22,7 +22,7 @@ const data = [
 
 export function ProjectionsChart() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-foreground">
           Projections vs Actuals

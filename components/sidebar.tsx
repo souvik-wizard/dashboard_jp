@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   BookOpen,
   ChevronDown,
@@ -8,7 +9,6 @@ import {
   ShoppingCart,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
 import { GoDotFill } from "react-icons/go";
 import { GrGroup } from "react-icons/gr";
 import {
@@ -178,6 +178,76 @@ export function Sidebar({ onClose, collapsed }: SidebarProps) {
     return React.createElement(Icon, props || {});
   };
 
+  // helper to render a single item (Link or button-like)
+  const renderItem = (item: SidebarItem) => {
+    const baseClasses = cn(
+      collapsed
+        ? "flex items-center justify-center p-2 rounded-lg text-sm cursor-pointer transition-colors"
+        : "flex items-center gap-2 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors",
+      item.active
+        ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+        : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+    );
+
+    const iconNode = (
+      <div className="w-6 h-6 flex items-center justify-center">
+        {item.icon ? (
+          renderIcon(item.icon, {
+            className: cn(
+              collapsed
+                ? "w-4 h-4"
+                : "w-5 h-5 text-[#1C1C1C33] dark:text-[#FFFFFF33]"
+            ),
+          })
+        ) : collapsed ? (
+          <div className="w-1 h-1 bg-current rounded-full opacity-60" />
+        ) : null}
+      </div>
+    );
+
+    const chevronNode = () => {
+      if (!item.children || collapsed) return null;
+      return (
+        <div className="ml-auto pl-2 relative flex items-center">
+          {/* active indicator: a thin vertical bar placed just left of the chevron */}
+          {item.active && (
+            <span className="absolute -left-2 top-1/2 -translate-y-1/2 h-6 w-0.5 bg-[var(--foreground)] rounded-sm" />
+          )}
+          <div className="pl-3">
+            {expandedItems.includes(item.name)
+              ? renderIcon(ChevronDown, {
+                  className: "w-4 h-4 text-muted-foreground",
+                })
+              : renderIcon(ChevronRight, {
+                  className: "w-4 h-4 text-muted-foreground",
+                })}
+          </div>
+        </div>
+      );
+    };
+
+    if (item.href) {
+      return (
+        <Link to={item.href} className={baseClasses}>
+          {chevronNode()}
+          {iconNode}
+          {!collapsed && <span className="truncate flex-1">{item.name}</span>}
+        </Link>
+      );
+    }
+
+    return (
+      <div
+        className={baseClasses}
+        onClick={() => item.children && toggleExpanded(item.name)}
+      >
+        {chevronNode()}
+        {iconNode}
+        {!collapsed && <span className="truncate flex-1">{item.name}</span>}
+      </div>
+    );
+  };
+
   return (
     <div
       className={cn(
@@ -227,10 +297,60 @@ export function Sidebar({ onClose, collapsed }: SidebarProps) {
             : "flex-1 overflow-y-auto p-4"
         )}
       >
-        {sidebarItems.map((section) => (
+        {/* Render Favorites and Recently in a two-column tab when expanded */}
+        {!collapsed &&
+        sidebarItems[0] &&
+        sidebarItems[1] &&
+        sidebarItems[0].title === "Favorites" ? (
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm text-muted-foreground  tracking-wider">
+                {sidebarItems[0].title}
+              </h3>
+              <h3 className="text-sm text-muted-foreground/40  tracking-wider mr-2">
+                {sidebarItems[1].title}
+              </h3>
+            </div>
+
+            <div>
+              <div className="space-y-1">
+                {sidebarItems[0].items.map((item) => (
+                  <div key={item.name}>{renderItem(item)}</div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="space-y-1">
+                {sidebarItems[1].items.map((item) => (
+                  <div key={item.name}>{renderItem(item)}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          // collapsed or not present: render the first section normally
+          sidebarItems[0] && (
+            <div className={cn(collapsed ? "mb-4" : "mb-6")}>
+              {!collapsed && (
+                <h3 className=" text-muted-foreground tracking-wider mb-3">
+                  {sidebarItems[0].title}
+                </h3>
+              )}
+              <div className={cn(collapsed ? "space-y-2" : "space-y-1")}>
+                {sidebarItems[0].items.map((item) => (
+                  <div key={item.name}>{renderItem(item)}</div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
+
+        {/* Render remaining sections skipping Recently (idx 1) since handled above */}
+        {sidebarItems.slice(2).map((section) => (
           <div key={section.title} className={cn(collapsed ? "mb-4" : "mb-6")}>
             {!collapsed && (
-              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
+              <h3 className="text-sm font-medium text-muted-foreground  tracking-wider mb-3">
                 {section.title}
               </h3>
             )}
@@ -238,115 +358,7 @@ export function Sidebar({ onClose, collapsed }: SidebarProps) {
             <div className={cn(collapsed ? "space-y-2" : "space-y-1")}>
               {section.items.map((item) => (
                 <div key={item.name}>
-                  {item.href ? (
-                    <Link
-                      to={item.href}
-                      className={cn(
-                        collapsed
-                          ? "flex items-center justify-center p-2 rounded-lg text-sm cursor-pointer transition-colors"
-                          : "flex items-center gap-2 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors",
-                        item.active
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium "
-                          : collapsed
-                          ? "text-sidebar-foreground hover:bg-sidebar-accent/50"
-                          : "text-sidebar-foreground hover:bg-sidebar-accent/50"
-                      )}
-                    >
-                      {/* right-side chevron for expanded rows with children */}
-                      {!collapsed && item.children ? (
-                        <div className="ml-auto pl-2 relative flex items-center">
-                          {/* active indicator bar */}
-                          {item.active && (
-                            <span className="absolute rounded-full -left-3 top-1/2 -translate-y-1/2 h-6 w-1 bg-[var(--foreground)] " />
-                          )}
-                          <div className="pl-3">
-                            {renderIcon(ChevronRight, {
-                              className: "w-4 h-4 text-muted-foreground",
-                            })}
-                          </div>
-                        </div>
-                      ) : null}
-                      {/* left icon area: always show icon in expanded mode */}
-                      <div
-                        className={cn(
-                          collapsed
-                            ? "w-6 h-6 flex items-center justify-center"
-                            : "w-6 h-6 flex items-center justify-center"
-                        )}
-                      >
-                        {item.icon ? (
-                          renderIcon(item.icon, {
-                            className: cn(
-                              collapsed
-                                ? "w-4 h-4 "
-                                : "w-5 h-5 text-sidebar-foreground "
-                            ),
-                          })
-                        ) : collapsed ? (
-                          <div className="w-1 h-1 bg-current rounded-full opacity-60" />
-                        ) : null}
-                      </div>
-
-                      {!collapsed && (
-                        <span className="truncate flex-1">{item.name}</span>
-                      )}
-                    </Link>
-                  ) : (
-                    <div
-                      className={cn(
-                        collapsed
-                          ? "flex items-center justify-center p-2 rounded-lg text-sm cursor-pointer transition-colors"
-                          : "flex items-center gap-2 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors",
-                        item.active
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-                          : "text-sidebar-foreground hover:bg-sidebar-accent/50"
-                      )}
-                      onClick={() => item.children && toggleExpanded(item.name)}
-                    >
-                      {/* right-side chevron for expanded rows with children */}
-                      {!collapsed && item.children ? (
-                        <div className="ml-auto pl-2 relative flex items-center">
-                          {/* active indicator bar */}
-                          {item.active && (
-                            <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-0.5 bg-[var(--foreground)] rounded-sm" />
-                          )}
-                          <div className="pl-3">
-                            {expandedItems.includes(item.name)
-                              ? renderIcon(ChevronDown, {
-                                  className: "w-4 h-4 text-muted-foreground",
-                                })
-                              : renderIcon(ChevronRight, {
-                                  className: "w-4 h-4 text-muted-foreground",
-                                })}
-                          </div>
-                        </div>
-                      ) : null}
-                      {/* left icon area */}
-                      <div
-                        className={cn(
-                          collapsed
-                            ? "w-6 h-6 flex items-center justify-center"
-                            : "w-6 h-6 flex items-center justify-center"
-                        )}
-                      >
-                        {item.icon ? (
-                          renderIcon(item.icon, {
-                            className: cn(
-                              collapsed
-                                ? "w-4 h-4"
-                                : "w-5 h-5  text-[#1C1C1C33] dark:text-[#FFFFFF33] "
-                            ),
-                          })
-                        ) : collapsed ? (
-                          <div className="w-1 h-1 bg-current rounded-full opacity-60" />
-                        ) : null}
-                      </div>
-
-                      {!collapsed && (
-                        <span className="truncate flex-1">{item.name}</span>
-                      )}
-                    </div>
-                  )}
+                  {renderItem(item)}
 
                   {item.children &&
                     expandedItems.includes(item.name) &&

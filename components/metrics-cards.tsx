@@ -51,7 +51,7 @@ const metrics = [
 
 export function MetricsCards() {
   return (
-    <div className="grid grid-cols-2 gap-3 lg:gap-8">
+    <div className="grid grid-cols-2 gap-3 lg:gap-8 h-full">
       {metrics.map((metric) => {
         const isLink = Boolean(metric.href);
 

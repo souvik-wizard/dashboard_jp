@@ -1,4 +1,5 @@
 import { Bell, LucideUserRound } from "lucide-react";
+import { cn } from "./lib/utils";
 import { PiBroadcast, PiBugBeetleLight } from "react-icons/pi";
 
 const notifications = [
@@ -65,12 +66,33 @@ const contacts = [
   { name: "Koray Okumus", avatar: "/images/DP1.png" },
 ];
 
-export function NotificationsPanel() {
+interface NotificationsPanelProps {
+  onClose?: () => void;
+  className?: string;
+}
+
+export function NotificationsPanel({
+  onClose,
+  className,
+}: NotificationsPanelProps) {
   return (
-    <div className="w-80 bg-background border-l border-border flex flex-col">
+    <div
+      className={cn(
+        "w-80 bg-background border-l border-border flex flex-col max-h-screen overflow-y-auto",
+        className
+      )}
+    >
       {/* Header */}
-      <div className="p-4  border-border">
+      <div className="p-4  border-border flex items-center justify-between">
         <h2 className="font-semibold text-foreground">Notifications</h2>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="lg:hidden p-2 rounded-md hover:bg-muted/50"
+          >
+            Close
+          </button>
+        )}
       </div>
 
       {/* Notifications */}
