@@ -8,7 +8,6 @@ const metrics = [
     change: "+11.01%",
     trend: "up",
     href: null as string | null,
-    // explicit light mode colors via inline style, dark mode via Tailwind class
     lightBg: "#E3F5FF",
     bgClass: "dark:!bg-[#E3F5FF]",
     lightText: "#1C1C1C",
@@ -19,7 +18,7 @@ const metrics = [
     value: "1,219",
     change: "-0.03%",
     trend: "down",
-    href: "/orders",
+    href: null as string | null,
     lightBg: "#F7F9FB",
     bgClass: "dark:!bg-[#FFFFFF0D]",
     lightText: "#1C1C1C",
